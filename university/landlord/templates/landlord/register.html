@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landlord Registration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+      .error-message {
+        display: none;
+      }
+      :root[data-theme="light"] {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-color: #1f2937;
+        --text-secondary: #4b5563;
+        --border-color: #e2e8f0;
+        --input-bg: #ffffff;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --error-color: #dc2626;
+      }
+
+      :root[data-theme="dark"] {
+        --primary-color: #818cf8;
+        --primary-dark: #6366f1;
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --text-color: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --border-color: #334155;
+        --input-bg: #1e293b;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --error-color: #ef4444;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      body {
+        background: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: -2rem auto 2rem;
+        padding: 0 1rem;
+        width: 100%;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        animation: slideUp 0.5s ease-out;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .input-group {
+        position: relative;
+      }
+
+      .input-group i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+        font-weight: 500;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.5rem;
+        background: var(--input-bg);
+        color: var(--text-color);
+        font-size: 1rem;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      .errorlist {
+        list-style: none;
+        padding: 0;
+        margin-top: 0.5rem;
+        color: var(--error-color);
+        font-size: 0.875rem;
+      }
+
+      .helptext {
+        display: block;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+
+      .messages {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+      }
+
+      .messages li {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .messages .error {
+        background-color: var(--error-color);
+      }
+
+      .messages .success {
+        background-color: #10B981;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: var(--card-bg);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-color);
+        box-shadow: var(--shadow);
+        z-index: 100;
+      }
+
+      .submit-btn {
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        width: 100%;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+      }
+
+      .submit-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+      }
+
+      .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-secondary);
+      }
+
+      .login-link a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .login-link a:hover {
+        text-decoration: underline;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <i class="fas fa-sun" id="themeIcon"></i>
+      <span id="themeText">Dark Mode</span>
+    </button>
+
+    <header class="header">
+      <h1>Landlord Registration</h1>
+      <p>Create your account to list your property</p>
+    </header>
+
+    <div class="container">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <div class="card">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              {{ form.email }}
+            </div>
+            {% if form.email.errors %}
+              <ul class="errorlist">
+                {% for error in form.email.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+
+          <!-- Name Field -->
+          <div class="form-group">
+            <div class="input-group">
+              <i class="fas fa-user"></i>
+              {{ form.name }}
+            </div>
+            {% if form.name.errors %}
+              <ul class="errorlist">
+                {% for error in form.name.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <div class="input-group">
+              <i class="fas fa-lock"></i>
+              {{ form.password1 }}
+              <button type="button" class="toggle-password" onclick="togglePassword('{{ form.password1.id_for_label }}')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            {% if form.password1.errors %}
+              <ul class="errorlist">
+                {% for error in form.password1.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if form.password1.help_text %}
+              <span class="helptext">{{ form.password1.help_text|safe }}</span>
+            {% endif %}
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="form-group">
+            <div class="input-group">
+              <i class="fas fa-lock"></i>
+              {{ form.password2 }}
+              <button type="button" class="toggle-password" onclick="togglePassword('{{ form.password2.id_for_label }}')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            {% if form.password2.errors %}
+              <ul class="errorlist">
+                {% for error in form.password2.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-user-plus"></i> Register
+          </button>
+        </form>
+        <div class="login-link">
+          Already have an account? <a href="{% url 'landlord-login' %}">Log in</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleTheme() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById("themeIcon");
+        const themeText = document.getElementById("themeText");
+        const currentTheme = html.getAttribute("data-theme");
+
+        if (currentTheme === "light") {
+          html.setAttribute("data-theme", "dark");
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+          themeText.textContent = "Light Mode";
+          localStorage.setItem("theme", "dark");
+        } else {
+          html.setAttribute("data-theme", "light");
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+          themeText.textContent = "Dark Mode";
+          localStorage.setItem("theme", "light");
+        }
+      }
+
+      function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling.querySelector('i');
+        
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+
+        const themeIcon = document.getElementById("themeIcon");
+        const themeText = document.getElementById("themeText");
+
+        if (savedTheme === "dark") {
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+          themeText.textContent = "Light Mode";
+        }
+      });
+    </script>
+  </body>
+</html>
