@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Housing Portal - Find Your Perfect Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4338ca;
+        --primary-light: #818cf8;
+        --surface-dark: #1e293b;
+        --surface: #334155;
+        --background: #0f172a;
+        --text: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --border: rgba(255, 255, 255, 0.1);
+        --success: #10b981;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--text);
+        font-family: "Space Grotesk", sans-serif;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 0% 0%,
+            rgba(99, 102, 241, 0.15),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(239, 68, 68, 0.1),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(16, 185, 129, 0.05),
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .navbar {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+      }
+
+      .navbar-brand {
+        color: var(--text);
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+
+      .navbar-brand:hover {
+        color: var(--primary-light);
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--primary-light);
+      }
+
+      .hero-section {
+        padding: 8rem 0 6rem;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--text),
+          rgba(255, 255, 255, 0.8)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        animation: fadeInUp 1s ease 0.2s backwards;
+      }
+
+      .cards-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        padding: 0 1rem;
+        animation: fadeInUp 1s ease 0.4s backwards;
+      }
+
+      .neo-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        width: 380px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .neo-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--success));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .neo-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .neo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-icon {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--success));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+      }
+
+      .card-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text);
+      }
+
+      .feature-list {
+        text-align: left;
+        margin: 2rem 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-item {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+      }
+
+      .feature-item i {
+        color: var(--success);
+        margin-right: 0.75rem;
+      }
+
+      .btn-neo {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border: none;
+        border-radius: 12px;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin: 0.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-neo::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transform: translateX(-100%);
+      }
+
+      .btn-neo:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        color: white;
+      }
+
+      .btn-neo:hover::after {
+        transform: translateX(100%);
+        transition: transform 0.75s ease;
+      }
+
+      .features-section {
+        padding: 6rem 0;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        animation: fadeInUp 1s ease 0.6s backwards;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+      }
+
+      .feature-card {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .footer {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        margin-top: 4rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .social-links a {
+        color: var(--text-secondary);
+        margin: 0 0.5rem;
+        font-size: 1.25rem;
+        transition: color 0.3s ease;
+      }
+
+      .social-links a:hover {
+        color: var(--primary);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .stats-container {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        margin: 4rem 0;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-light);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.1rem;
+        }
+
+        .neo-card {
+          width: 100%;
+          max-width: 380px;
+          padding: 2rem;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-container {
+          gap: 2rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <i class="fas fa-home-alt me-2"></i>StudentHome
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="container">
+        <h1 class="hero-title">Find Your Perfect Student Home</h1>
+        <p class="hero-subtitle">
+          Join our community of students and landlords to find the perfect
+          accommodation or list your property. Simple, secure, and tailored to
+          student needs.
+        </p>
+
+        <!-- Stats -->
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-number">5000+</div>
+            <div class="stat-label">Happy Students</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Properties Listed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Trusted Landlords</div>
+          </div>
+        </div>
+
+        <div class="cards-container">
+          <!-- Student Card -->
+          <div class="neo-card">
+            <i class="fas fa-user-graduate card-icon"></i>
+            <h2 class="card-title">Students</h2>
+            <p style="color: var(--text-secondary)">
+              Find and book your ideal student accommodation
+            </p>
+            <ul class="feature-list">
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                Browse verified properties
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                Virtual tours available
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                Secure booking process
+              </li>
+            </ul>
+            <a href="/student/login/" class="btn btn-neo">
+              <i class="fas fa-sign-in-alt me-2"></i>Login
+            </a>
+            <a href="/student/register/" class="btn btn-neo">
+              <i class="fas fa-user-plus me-2"></i>Register
+            </a>
+          </div>
+
+          <!-- Landlord Card -->
+          <div class="neo-card">
+            <i class="fas fa-house-user card-icon"></i>
+            <h2 class="card-title">Landlords</h2>
+            <p style="color: var(--text-secondary)">
+              List and manage your properties efficiently
+            </p>
+            <ul class="feature-list">
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                Easy property listing
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                Tenant verification
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                Automated payments
+              </li>
+            </ul>
+            <a href="/landlord/login/" class="btn btn-neo">
+              <i class="fas fa-sign-in-alt me-2"></i>Login
+            </a>
+            <a href="/landlord/register/" class="btn btn-neo">
+              <i class="fas fa-user-plus me-2"></i>Register
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section" id="features">
+      <div class="container">
+        <h2 class="hero-title" style="font-size: 2.5rem">Why Choose Us</h2>
+        <p class="hero-subtitle">
+          We provide the best features for both students and landlords
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <h3>Verified Listings</h3>
+            <p style="color: var(--text-secondary)">
+              All properties and landlords are thoroughly verified for your
+              safety
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-bolt feature-icon"></i>
+            <h3>Quick Booking</h3>
+            <p style="color: var(--text-secondary)">
+              Streamlined process to help you secure your accommodation fast
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-comments feature-icon"></i>
+            <h3>Direct Communication</h3>
+            <p style="color: var(--text-secondary)">
+              Built-in messaging system for seamless communication
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-hand-holding-usd feature-icon"></i>
+            <h3>Secure Payments</h3>
+            <p style="color: var(--text-secondary)">
+              Safe and transparent payment processing
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-mobile-alt feature-icon"></i>
+            <h3>Mobile Friendly</h3>
+            <p style="color: var(--text-secondary)">
+              Access your account and manage properties on any device
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-headset feature-icon"></i>
+            <h3>24/7 Support</h3>
+            <p style="color: var(--text-secondary)">
+              Our support team is always here to help you
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="features-section">
+      <div class="container">
+        <h2 class="hero-title" style="font-size: 2.5rem">About StudentHome</h2>
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="neo-card" style="width: 100%; text-align: left">
+              <h3 style="color: var(--primary-light); margin-bottom: 1.5rem">
+                Your Trusted Housing Partner
+              </h3>
+              <p style="color: var(--text-secondary); margin-bottom: 1rem">
+                StudentHome is dedicated to making student accommodation simple,
+                secure, and enjoyable. We understand the unique challenges
+                students face when looking for housing, and we're here to help.
+              </p>
+              <p style="color: var(--text-secondary); margin-bottom: 1rem">
+                Our platform connects students with verified landlords, ensuring
+                a safe and reliable housing experience. We've helped thousands
+                of students find their perfect home away from home.
+              </p>
+              <ul class="feature-list">
+                <li class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  Trusted by leading universities
+                </li>
+                <li class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  Verified properties and landlords
+                </li>
+                <li class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  Dedicated support team
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="neo-card" style="width: 100%">
+              <i
+                class="fas fa-chart-line"
+                style="
+                  font-size: 4rem;
+                  color: var(--primary-light);
+                  margin-bottom: 2rem;
+                "
+              ></i>
+              <div class="stats-container" style="margin: 0">
+                <div class="stat-item">
+                  <div class="stat-number">98%</div>
+                  <div class="stat-label">Satisfaction Rate</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">15+</div>
+                  <div class="stat-label">Cities Covered</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Navbar background change on scroll
+      window.addEventListener("scroll", function () {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.style.background = "rgba(30, 41, 59, 0.95)";
+        } else {
+          navbar.style.background = "rgba(30, 41, 59, 0.8)";
+        }
+      });
+    </script>
+  </body>
+</html>

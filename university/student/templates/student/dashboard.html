@@ -1,651 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ultra Modern Student Housing</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
-
-      :root {
-        --primary: #6366f1;
-        --primary-dark: #4338ca;
-        --primary-light: #818cf8;
-        --success: #10b981;
-        --warning: #f59e0b;
-        --danger: #ef4444;
-        --surface-dark: #1e293b;
-        --surface: #334155;
-        --surface-light: #475569;
-        --background: #0f172a;
-        --text: #f8fafc;
-        --text-secondary: #cbd5e1;
-        --border: rgba(255, 255, 255, 0.1);
-      }
-
-      body {
-        background-color: var(--background);
-        color: var(--text);
-        font-family: "Space Grotesk", sans-serif;
-        min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-            circle at top right,
-            rgba(99, 102, 241, 0.15),
-            transparent 60%
-          ),
-          radial-gradient(
-            circle at bottom left,
-            rgba(239, 68, 68, 0.1),
-            transparent 60%
-          );
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .container {
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Ultra Modern Navbar */
-      .navbar {
-        background: rgba(30, 41, 59, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
-        padding: 1.25rem 0;
-      }
-
-      .navbar-brand {
-        font-weight: 700;
-        font-size: 1.5rem;
-        background: linear-gradient(
-          135deg,
-          var(--primary-light),
-          var(--primary)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-      }
-
-      .nav-link {
-        color: var(--text) !important;
-        position: relative;
-        padding: 0.5rem 1rem;
-        transition: all 0.3s ease;
-      }
-
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: var(--primary);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-      }
-
-      .nav-link:hover::after {
-        width: 80%;
-      }
-
-      /* Hero Section */
-      .hero-section {
-        background: linear-gradient(
-          135deg,
-          rgba(99, 102, 241, 0.1),
-          rgba(99, 102, 241, 0.05)
-        );
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: 3.5rem;
-        margin: 2rem 0;
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-
-      .hero-section::before,
-      .hero-section::after {
-        content: "";
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-      }
-
-      .hero-section::before {
-        top: -150px;
-        right: -150px;
-        background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-        opacity: 0.1;
-      }
-
-      .hero-section::after {
-        bottom: -150px;
-        left: -150px;
-        background: radial-gradient(
-          circle,
-          var(--primary-dark) 0%,
-          transparent 70%
-        );
-        opacity: 0.1;
-      }
-
-      .hero-content {
-        position: relative;
-        z-index: 2;
-      }
-
-      .hero-title {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--text), var(--primary-light));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      /* Cards */
-      .neo-card {
-        background: var(--surface-dark);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .neo-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(
-          90deg,
-          var(--primary),
-          var(--primary-light)
-        );
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.3s ease;
-      }
-
-      .neo-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .neo-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      }
-
-      .card-header {
-        background: none;
-        border: none;
-        padding: 0 0 1.5rem 0;
-      }
-
-      .card-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--text);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .card-title i {
-        color: var(--primary);
-      }
-
-      /* Form Elements */
-      .form-label {
-        color: var(--text);
-        font-weight: 500;
-        margin-bottom: 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .form-control,
-      .form-select {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        color: var(--text);
-        padding: 1rem 1.25rem;
-        transition: all 0.3s ease;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-      }
-
-      .form-control:focus,
-      .form-select:focus {
-        background: var(--surface-dark);
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        color: var(--text);
-        outline: none;
-      }
-
-      .form-control::placeholder {
-        color: var(--text-secondary);
-      }
-
-      /* Remove arrows from number inputs */
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      input[type="number"] {
-        -moz-appearance: textfield;
-      }
-
-      /* Remove calendar icon from date inputs */
-      input[type="date"]::-webkit-calendar-picker-indicator {
-        opacity: 0;
-        position: absolute;
-        right: 10px;
-        cursor: pointer;
-      }
-
-      input[type="date"] {
-        position: relative;
-      }
-
-      /* Custom select styling */
-      .form-select {
-        background-image: none;
-        position: relative;
-        cursor: pointer;
-      }
-
-      .select-wrapper {
-        position: relative;
-      }
-
-      .select-wrapper::after {
-        content: "⌄";
-        position: absolute;
-        right: 1.25rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--primary);
-        font-size: 1.5rem;
-        pointer-events: none;
-        transition: transform 0.3s ease;
-      }
-
-      .select-wrapper:focus-within::after {
-        transform: translateY(-50%) rotate(180deg);
-      }
-
-      .form-select option {
-        background: var(--surface-dark);
-        color: var(--text);
-        padding: 1rem;
-      }
-
-      /* Price Display */
-      .price-display {
-        background: linear-gradient(
-          135deg,
-          var(--surface),
-          var(--surface-dark)
-        );
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .price-display::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          45deg,
-          transparent,
-          rgba(255, 255, 255, 0.1),
-          transparent
-        );
-        animation: shine 3s infinite;
-      }
-
-      @keyframes shine {
-        0% {
-          transform: translateX(-100%);
-        }
-        100% {
-          transform: translateX(100%);
-        }
-      }
-
-      .price-amount {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--primary-light);
-        text-align: center;
-        margin: 0;
-      }
-
-      /* Room Info */
-      .room-info {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 2rem;
-        margin-top: 2rem;
-      }
-
-      .room-image {
-        width: 100%;
-        border-radius: 16px;
-        margin-bottom: 1.5rem;
-        transition: transform 0.3s ease;
-      }
-
-      .room-image:hover {
-        transform: scale(1.02);
-      }
-
-      .room-features {
-        list-style: none;
-        padding: 0;
-        margin: 1.5rem 0;
-      }
-
-      .room-features li {
-        padding: 0.75rem 0;
-        padding-left: 2rem;
-        position: relative;
-        color: var(--text-secondary);
-      }
-
-      .room-features li::before {
-        content: "⚡";
-        position: absolute;
-        left: 0;
-        color: var(--primary);
-      }
-
-      /* Table Styling */
-      .neo-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0 1rem;
-      }
-
-      .neo-table th {
-        color: var(--text-secondary);
-        font-weight: 500;
-        padding: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.875rem;
-      }
-
-      .neo-table td {
-        background: var(--surface);
-        padding: 1.25rem;
-        color: var(--text);
-        border: none;
-        transition: all 0.3s ease;
-      }
-
-      .neo-table tr td:first-child {
-        border-radius: 12px 0 0 12px;
-      }
-
-      .neo-table tr td:last-child {
-        border-radius: 0 12px 12px 0;
-      }
-
-      .neo-table tr:hover td {
-        background: var(--surface-light);
-        transform: scale(1.01);
-      }
-
-      /* Status Badges */
-      .status-badge {
-        padding: 0.5rem 1.25rem;
-        border-radius: 50px;
-        font-weight: 500;
-        font-size: 0.875rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .status-pending {
-        background: rgba(245, 158, 11, 0.1);
-        color: var(--warning);
-        border: 1px solid rgba(245, 158, 11, 0.2);
-      }
-
-      .status-accepted {
-        background: rgba(16, 185, 129, 0.1);
-        color: var(--success);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-      }
-
-      .status-declined {
-        background: rgba(239, 68, 68, 0.1);
-        color: var(--danger);
-        border: 1px solid rgba(239, 68, 68, 0.2);
-      }
-
-      /* Buttons */
-      .btn-neo {
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-dark)
-        );
-        border: none;
-        border-radius: 12px;
-        padding: 1rem 2rem;
-        font-weight: 600;
-        color: white;
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
-
-      .btn-neo::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-        transform: translateY(-100%);
-        transition: transform 0.3s ease;
-      }
-
-      .btn-neo:hover::before {
-        transform: translateY(0);
-      }
-
-      .btn-neo:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
-      }
-
-      /* Empty State */
-      .empty-state {
-        text-align: center;
-        padding: 4rem 0;
-      }
-
-      .empty-state i {
-        font-size: 4rem;
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-light)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 1.5rem;
-      }
-
-      .empty-state p {
-        color: var(--text-secondary);
-        font-size: 1.25rem;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-
-      /* Alerts */
-      .alert {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        color: var(--text);
-        padding: 1rem 1.5rem;
-      }
-
-      /* Animations */
-      @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
-      }
-
-      .floating {
-        animation: float 3s ease-in-out infinite;
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .hero-section {
-          padding: 2rem;
-          margin: 1rem;
-        }
-
-        .hero-title {
-          font-size: 2rem;
-        }
-
-        .neo-card {
-          padding: 1.5rem;
-        }
-      }
-
-      /* Loading Animation */
-      .loading-bar {
-        height: 3px;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: linear-gradient(
-          to right,
-          var(--primary),
-          var(--primary-light)
-        );
-        z-index: 9999;
-        animation: loadingAnimation 2s infinite;
-      }
-
-      @keyframes loadingAnimation {
-        0% {
-          transform: translateX(-100%);
-        }
-        100% {
-          transform: translateX(100%);
-        }
-      }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Space Grotesk", "sans-serif"],
+            },
+            animation: {
+              loading: "loading 2s infinite",
+              float: "float 3s ease-in-out infinite",
+              shine: "shine 3s infinite",
+            },
+            keyframes: {
+              loading: {
+                "0%": { transform: "translateX(-100%)" },
+                "100%": { transform: "translateX(100%)" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+              shine: {
+                "0%": { transform: "translateX(-100%)" },
+                "100%": { transform: "translateX(100%)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
+  <body
+    class="min-h-screen bg-slate-900 text-slate-50 font-sans relative overflow-x-hidden"
+  >
+    <!-- Gradient Background -->
+    <div class="fixed inset-0 pointer-events-none">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.15),transparent_60%),radial-gradient(circle_at_bottom_left,rgba(239,68,68,0.1),transparent_60%)]"
+      ></div>
+    </div>
+
     <!-- Loading Bar -->
-    <div class="loading-bar"></div>
+    <div
+      class="h-0.5 bg-gradient-to-r from-indigo-500 to-indigo-600 fixed top-0 left-0 w-full z-50 animate-loading"
+    ></div>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <i class="fas fa-building-shield me-2"></i>Nova Housing
+    <nav
+      class="sticky top-0 z-40 bg-slate-800/80 backdrop-blur border-b border-white/10"
+    >
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <a href="#" class="flex items-center gap-2">
+          <i class="fas fa-building-shield text-xl"></i>
+          <span
+            class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-indigo-600 bg-clip-text text-transparent"
+          >
+            Nova Housing
+          </span>
         </a>
-        <div class="ms-auto d-flex align-items-center">
-          <a class="nav-link" href="{% url 'logout' %}">
-            <i class="fas fa-power-off me-2"></i>Exit Portal
-          </a>
-        </div>
+        <a
+          href="/"
+          class="flex items-center gap-2 text-slate-200 hover:text-white transition-colors"
+        >
+          <i class="fas fa-power-off"></i>
+          <span class="hidden sm:inline">Exit Portal</span>
+        </a>
       </div>
     </nav>
 
-    <div class="container py-4">
+    <main class="container mx-auto px-4 py-6 relative z-10">
       <!-- Messages -->
       {% if messages %} {% for message in messages %}
       <div
-        class="alert alert-{{ message.tags }} alert-dismissible fade show"
-        role="alert"
+        class="mb-4 p-4 rounded-xl {% if message.tags == 'success' %}bg-emerald-500/10 text-emerald-500 border border-emerald-500/20{% elif message.tags == 'error' %}bg-red-500/10 text-red-500 border border-red-500/20{% else %}bg-indigo-500/10 text-indigo-500 border border-indigo-500/20{% endif %}"
       >
         {{ message }}
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
+        <button class="float-right" data-dismiss="alert">×</button>
       </div>
       {% endfor %} {% endif %}
 
       <!-- Hero Section -->
-      <div class="hero-section">
-        <div class="hero-content">
-          <h1 class="hero-title floating">
+      <div
+        class="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 rounded-2xl p-6 sm:p-8 md:p-12 border border-white/10 backdrop-blur relative overflow-hidden mb-6"
+      >
+        <div class="relative z-10">
+          <h1
+            class="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-indigo-400 bg-clip-text text-transparent mb-4 animate-float"
+          >
             Welcome, {{ student.user.username }}
           </h1>
-          <p class="lead text-secondary mb-0">
+          <p class="text-slate-400 text-lg">
             Discover your perfect living space with our advanced room matching
             system.
           </p>
@@ -653,79 +115,91 @@
       </div>
 
       <!-- Room Request Form -->
-      <div class="neo-card">
-        <div class="card-header">
-          <h2 class="card-title">
-            <i class="fas fa-wand-magic-sparkles"></i>
+      <div
+        class="bg-slate-800/50 backdrop-blur rounded-2xl border border-white/10 mb-6"
+      >
+        <div class="p-6">
+          <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-wand-magic-sparkles text-indigo-400"></i>
             Create New Request
           </h2>
-        </div>
-        <div class="card-body">
+
           <form
             method="post"
             action="{% url 'request_room' %}"
-            class="needs-validation"
-            novalidate
+            class="space-y-6"
           >
             {% csrf_token %}
-            <div class="row g-4">
-              <div class="col-md-6">
-                <label class="form-label">
-                  <i class="fas fa-bed me-2"></i>Room Configuration
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Room Type -->
+              <div class="space-y-2">
+                <label class="flex items-center gap-2 text-slate-300">
+                  <i class="fas fa-bed"></i>
+                  Room Configuration
                 </label>
-                <div class="select-wrapper">
-                  <select
-                    class="form-select"
-                    name="room_type"
-                    id="room_type"
-                    required
-                    onchange="updateRoomInfo()"
-                  >
-                    <option value="">Select your ideal space</option>
-                    <option value="single">Single Room - Personal Haven</option>
-                    <option value="double">Double Room - Social Living</option>
-                    <option value="studio">
-                      Studio - Complete Independence
-                    </option>
-                  </select>
-                </div>
+                <select
+                  id="room_type"
+                  name="room_type"
+                  required
+                  onchange="updateRoomInfo()"
+                  class="w-full bg-slate-700 border border-slate-600 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="">Select your ideal space</option>
+                  <option value="single">Single Room - Personal Haven</option>
+                  <option value="double">Shared Room - Social Living</option>
+                  <!-- <option value="studio">Studio - Complete Independence</option> -->
+                </select>
               </div>
-              <div class="col-md-6">
-                <label class="form-label">
-                  <i class="fas fa-calendar me-2"></i>Move-in Date
+
+              <!-- Move-in Date -->
+              <div class="space-y-2">
+                <label class="flex items-center gap-2 text-slate-300">
+                  <i class="fas fa-calendar"></i>
+                  Move-in Date
                 </label>
                 <input
                   type="date"
-                  class="form-control"
                   name="move_in_date"
                   required
+                  class="w-full bg-slate-700 border border-slate-600 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
-              <div class="col-md-6">
-                <label class="form-label">
-                  <i class="fas fa-clock me-2"></i>Duration
+
+              <!-- Duration -->
+              <div class="space-y-2">
+                <label class="flex items-center gap-2 text-slate-300">
+                  <i class="fas fa-clock"></i>
+                  Duration
                 </label>
-                <div class="select-wrapper">
-                  <select class="form-select" name="duration" required>
-                    <option value="">Choose your stay duration</option>
-                    <option value="4">
-                      1 Semester (4 months) - Short Term
-                    </option>
-                    <option value="8">
-                      2 Semesters (8 months) - Academic Year
-                    </option>
-                    <option value="12">
-                      3 Semesters (12 months) - Full Year
-                    </option>
-                  </select>
-                </div>
+                <select
+                  name="duration"
+                  required
+                  class="w-full bg-slate-700 border border-slate-600 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="">Choose your stay duration</option>
+                  <option value="4">1 Semester (4 months) - Short Term</option>
+                  <option value="8">
+                    2 Semesters (8 months) - Academic Year
+                  </option>
+                  <option value="12">
+                    3 Semesters (12 months) - Full Year
+                  </option>
+                </select>
               </div>
-              <div class="col-md-6">
-                <label class="form-label">
-                  <i class="fas fa-coins me-2"></i>Monthly Investment
+
+              <!-- Budget Display -->
+              <div class="space-y-2">
+                <label class="flex items-center gap-2 text-slate-300">
+                  <i class="fas fa-coins"></i>
+                  Monthly Investment
                 </label>
-                <div class="price-display">
-                  <p class="price-amount" id="budget_display">
+                <div
+                  class="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl p-4 text-center border border-slate-600"
+                >
+                  <p
+                    id="budget_display"
+                    class="text-2xl font-bold text-indigo-400"
+                  >
                     Select a room type
                   </p>
                 </div>
@@ -733,103 +207,113 @@
               </div>
             </div>
 
-            <div id="room_info" class="room-info mt-4"></div>
+            <!-- Room Info -->
+            <div id="room_info" class="mt-6"></div>
 
-            <div class="mt-4">
-              <label class="form-label">
-                <i class="fas fa-list-check me-2"></i>Special Requirements
+            <!-- Special Requirements -->
+            <div class="space-y-2">
+              <label class="flex items-center gap-2 text-slate-300">
+                <i class="fas fa-list-check"></i>
+                Special Requirements
               </label>
               <textarea
-                class="form-control"
                 name="special_requirements"
                 rows="3"
+                class="w-full bg-slate-700 border border-slate-600 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder="Tell us about any specific preferences or needs..."
               ></textarea>
             </div>
 
-            <div class="mt-4">
-              <button type="submit" class="btn-neo">
-                <i class="fas fa-paper-plane me-2"></i>Submit Request
-              </button>
-            </div>
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all group"
+            >
+              <i
+                class="fas fa-paper-plane group-hover:translate-x-1 transition-transform"
+              ></i>
+              Submit Request
+            </button>
           </form>
         </div>
       </div>
 
-      <!-- Room Requests Table -->
-      <div class="neo-card">
-        <div class="card-header">
-          <h2 class="card-title">
-            <i class="fas fa-history"></i>
+      <!-- Request History -->
+      <div
+        class="bg-slate-800/50 backdrop-blur rounded-2xl border border-white/10"
+      >
+        <div class="p-6">
+          <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-history text-indigo-400"></i>
             Request History
           </h2>
-        </div>
-        <div class="card-body">
+
           {% if room_requests %}
-          <div class="table-responsive">
-            <table class="neo-table">
-              <thead>
-                <tr>
-                  <th>Room Type</th>
-                  <th>Move-in Date</th>
-                  <th>Duration</th>
-                  <th>Budget</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for request in room_requests %}
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <i class="fas fa-home me-2 text-primary"></i>
-                      <span>{{ request.get_room_type_display }}</span>
-                    </div>
-                  </td>
-                  <td>{{ request.move_in_date }}</td>
-                  <td>{{ request.duration }} months</td>
-                  <td>£{{ request.budget }}</td>
-                  <td>
-                    <span
-                      class="status-badge {% if request.status == 'accepted' %}status-accepted{% elif request.status == 'declined' %}status-declined{% else %}status-pending{% endif %}"
+          <div class="space-y-4">
+            {% for request in room_requests %}
+            <div class="bg-slate-800 rounded-xl p-4 border border-slate-700">
+              <div class="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
+                <div>
+                  <p class="text-slate-400 text-sm">Room Type</p>
+                  <div class="flex items-center gap-2">
+                    <i class="fas fa-home text-indigo-400"></i>
+                    <span class="text-slate-200"
+                      >{{ request.get_room_type_display }}</span
                     >
-                      <i
-                        class="fas {% if request.status == 'accepted' %}fa-check-circle{% elif request.status == 'declined' %}fa-times-circle{% else %}fa-clock{% endif %}"
-                      ></i>
-                      {{ request.status|title }}
-                    </span>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+                  </div>
+                </div>
+                <div>
+                  <p class="text-slate-400 text-sm">Move-in Date</p>
+                  <p class="text-slate-200">{{ request.move_in_date }}</p>
+                </div>
+                <div>
+                  <p class="text-slate-400 text-sm">Duration</p>
+                  <p class="text-slate-200">{{ request.duration }} months</p>
+                </div>
+                <div>
+                  <p class="text-slate-400 text-sm">Budget</p>
+                  <p class="text-slate-200">£{{ request.budget }}</p>
+                </div>
+                <div>
+                  <p class="text-slate-400 text-sm">Status</p>
+                  <span
+                    class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm {% if request.status == 'accepted' %} bg-emerald-500/10 text-emerald-500 {% elif request.status == 'declined' %} bg-red-500/10 text-red-500 {% else %} bg-yellow-500/10 text-yellow-500 {% endif %}"
+                  >
+                    <i
+                      class="fas {% if request.status == 'accepted' %}fa-check-circle{% elif request.status == 'declined' %}fa-times-circle{% else %}fa-clock{% endif %}"
+                    ></i>
+                    {{ request.status|title }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
           </div>
           {% else %}
-          <div class="empty-state">
-            <i class="fas fa-inbox floating"></i>
-            <p>
-              Your future home awaits! Start by submitting your first room
-              request.
+          <div class="text-center py-12">
+            <i
+              class="fas fa-inbox text-4xl text-slate-600 mb-4 animate-float"
+            ></i>
+            <p class="text-slate-400">
+              Start your journey by submitting your first room request above.
             </p>
           </div>
           {% endif %}
         </div>
       </div>
-    </div>
+    </main>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Room configuration data with enhanced descriptions
+      // Room configuration data
       const roomBudgets = {
-        single: 2500,
-        double: 1800,
-        studio: 3200,
+        single: 3100,
+        double: 2600,
+        // studio: 3200,
       };
 
       const roomDescriptions = {
         single: {
-          image: "/api/placeholder/800/400",
+          image: "{% static 'images/single.jpg' %}",
           title: "Personal Haven - Single Room",
           description:
             "Your private sanctuary for focused study and peaceful living",
@@ -843,7 +327,7 @@
           ],
         },
         double: {
-          image: "/api/placeholder/800/400",
+          image: "{% static 'images/double_room_image.jpg' %}",
           title: "Social Living - Double Room",
           description:
             "Perfect balance of private space and social interaction",
@@ -854,19 +338,6 @@
             "Smart room divider system",
             "Dual climate control zones",
             "Enhanced soundproofing between spaces",
-          ],
-        },
-        studio: {
-          image: "/api/placeholder/800/400",
-          title: "Complete Independence - Studio Apartment",
-          description: "Your own private universe with everything you need",
-          features: [
-            "Full kitchenette with modern appliances",
-            "En-suite bathroom with rain shower",
-            "Convertible living/sleeping space",
-            "Dedicated home office nook",
-            "Smart home automation features",
-            "Premium finishes throughout",
           ],
         },
       };
@@ -885,31 +356,47 @@
 
           const roomData = roomDescriptions[roomType];
           roomInfo.innerHTML = `
-            <div class="row" style="opacity: 0; transform: translateY(20px);">
-              <div class="col-lg-6 mb-4 mb-lg-0">
-                <img src="${
-                  roomData.image
-                }" alt="${roomType} visualization" class="room-image shadow-lg" />
-              </div>
-              <div class="col-lg-6">
-                <h3 class="text-primary mb-3">${roomData.title}</h3>
-                <p class="text-secondary mb-4">${roomData.description}</p>
-                <h4 class="text-primary mb-3">✨ Premium Features</h4>
-                <ul class="room-features">
-                  ${roomData.features
-                    .map((feature) => `<li>${feature}</li>`)
-                    .join("")}
-                </ul>
-              </div>
-            </div>
-          `;
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 opacity-0 transform translate-y-4 transition-all duration-500">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <img 
+                                    src="${roomData.image}" 
+                                    alt="${roomData.title}" 
+                                    class="w-full h-48 md:h-64 object-cover rounded-lg shadow-lg"
+                                    loading="lazy"
+                                />
+                            </div>
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-indigo-400">${
+                                  roomData.title
+                                }</h3>
+                                <p class="text-slate-300">${
+                                  roomData.description
+                                }</p>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-indigo-400 mb-2">✨ Premium Features</h4>
+                                    <ul class="space-y-2">
+                                        ${roomData.features
+                                          .map(
+                                            (feature) => `
+                                            <li class="flex items-start gap-2 text-slate-300">
+                                                <span class="text-indigo-400 mt-1">⚡</span>
+                                                <span>${feature}</span>
+                                            </li>
+                                        `
+                                          )
+                                          .join("")}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
 
-          // Animate the room info appearance
+          // Animate the content appearance
           requestAnimationFrame(() => {
             const content = roomInfo.firstElementChild;
-            content.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
-            content.style.opacity = "1";
-            content.style.transform = "translateY(0)";
+            content.classList.remove("opacity-0", "translate-y-4");
           });
         } else {
           budgetDisplay.textContent = "Select a room type";
@@ -918,29 +405,31 @@
         }
       }
 
-      // Initialize form validation
-      (() => {
-        "use strict";
-        const forms = document.querySelectorAll(".needs-validation");
-        Array.from(forms).forEach((form) => {
-          form.addEventListener(
-            "submit",
-            (event) => {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add("was-validated");
-            },
-            false
-          );
-        });
-      })();
-
       // Hide loading bar after page load
       window.addEventListener("load", () => {
-        document.querySelector(".loading-bar").style.display = "none";
+        document.querySelector(".animate-loading").style.display = "none";
       });
+
+      // Form validation
+      document.querySelectorAll("form").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        });
+      });
+
+      // Initialize tooltips and other Bootstrap features if needed
+      if (typeof bootstrap !== "undefined") {
+        const tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+      }
     </script>
   </body>
 </html>
